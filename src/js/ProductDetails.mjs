@@ -1,5 +1,8 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
-
+import {
+  getLocalStorage,
+  setLocalStorage,
+  updateCartCount
+} from "./utils.mjs";
 export default class ProductDetails {
     constructor(productId, dataSource) {
         this.productId = productId;
@@ -17,16 +20,17 @@ export default class ProductDetails {
             .addEventListener("click", this.addProductToCart.bind(this));
     }
         
-    addProductToCart() {
-        let cart = getLocalStorage("so-cart");
+  addProductToCart() {
+    let cart = getLocalStorage("so-cart");
 
-        if (!Array.isArray(cart)) {
-            cart = cart ? [cart] : [];
-        }
-
-        cart.push(this.product);
-        setLocalStorage("so-cart", cart);
+    if (!Array.isArray(cart)) {
+      cart = cart ? [cart] : [];
     }
+
+    cart.push(this.product);
+    setLocalStorage("so-cart", cart);
+    updateCartCount();
+  }
         
 
     renderProductDetails() {
