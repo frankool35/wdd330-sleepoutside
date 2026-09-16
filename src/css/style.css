@@ -287,3 +287,36 @@ footer {
   text-align: center;
   z-index: 10;
 }
+
+/* Product category section */
+.category-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.category-list li {
+  text-align: center;
+  flex: 1;
+}
+
+.category-list img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.category-list h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.category-list a {
+  text-decoration: none;
+  color: inherit;
+}
