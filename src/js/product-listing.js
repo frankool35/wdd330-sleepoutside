@@ -1,4 +1,4 @@
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import { getParam, updateCartCount } from "./utils.mjs";
 
@@ -14,7 +14,7 @@ if (title && category) {
     title.textContent = `Top Products: ${formattedCategory}`;
 }
 
-const dataSource = new ProductData();
+const dataSource = new ExternalServices();
 
 const listElement = document.querySelector(".product-list");
 
