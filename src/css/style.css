@@ -320,3 +320,8 @@ footer {
   text-decoration: none;
   color: inherit;
 }
+
+.cart svg {
+  width: 35px;
+  height: 35px;
+}
