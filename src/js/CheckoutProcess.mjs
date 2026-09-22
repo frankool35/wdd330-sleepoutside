@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 export default class CheckoutProcess {
@@ -35,7 +35,7 @@ export default class CheckoutProcess {
 
         subtotal.innerText = `$${this.itemTotal.toFixed(2)}`;
         itemCountElement.innerText = itemCount;
-    } 
+    }
 
     calculateOrderTotal() {
         this.tax = this.itemTotal * 0.06;
@@ -69,25 +69,41 @@ export default class CheckoutProcess {
     }
 
     async checkout(form) {
-        const formData = new FormData(form);
-        const order = {};
+        try {
+            const formData = new FormData(form);
+            const order = {};
 
-        formData.forEach((value, key) => {
-            order[key] = value;
-        });
+            formData.forEach((value, key) => {
+                order[key] = value;
+            });
 
-        order.orderDate = new Date().toISOString();
-        order.orderTotal = this.orderTotal.toFixed(2);
-        order.tax = this.tax.toFixed(2);
-        order.shipping = this.shipping;
-        order.items = this.list.map((item) => ({
-            id: item.Id,
-            name: item.Name,
-            price: item.FinalPrice,
-            quantity: 1,
-        }));
+            order.orderDate = new Date().toISOString();
+            order.orderTotal = this.orderTotal.toFixed(2);
+            order.tax = this.tax.toFixed(2);
+            order.shipping = this.shipping;
+            order.items = this.list.map((item) => ({
+                id: item.Id,
+                name: item.Name,
+                price: item.FinalPrice,
+                quantity: 1,
+            }));
 
-        const externalServices = new ExternalServices();
-        return await externalServices.checkout(order);
+            const externalServices = new ExternalServices();
+            return await externalServices.checkout(order);
+
+        } catch (err) {
+            console.error("Checkout error:", err);
+
+            if (err.name === "servicesError") {
+                const message =
+                    typeof err.message === "object"
+                        ? Object.values(err.message).join(", ")
+                        : err.message;
+
+                alertMessage(message);
+            }
+
+            throw err;
+        }
     }
 }

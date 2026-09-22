@@ -21,12 +21,11 @@ form.addEventListener("submit", async (event) => {
         console.log("Order submitted:", response);
 
         if (response.message === "Order Placed") {
-            alert(`Order placed successfully! Your order ID is ${response.orderId}.`);
             localStorage.removeItem("so-cart");
-            window.location.href = "../index.html";
+            window.location.href = "success.html";
         }
+        
     } catch (error) {
         console.error("Checkout failed:", error);
-        alert("Sorry, your order could not be placed. Please try again.");
     }
 });
